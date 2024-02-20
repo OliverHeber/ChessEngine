@@ -38,8 +38,12 @@ class Board():
                     # Blit (draw) the piece
                     screen.blit(IMAGES[piece], p.Rect(col * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
+    # Changes the board state to reflect the given move
     def make_move(self, move: Move):
+        # We are moving a piece from a square, so it must then be empty
         self.board[move.start_row][move.start_col] = ".."
+
+        # We are moving a piece to this square, so this piece will be allocated here
         self.board[move.end_row][move.end_col] = move.moved_piece
 
         # Maintain all moves to undo later
@@ -47,3 +51,21 @@ class Board():
 
         # Alternate player parity
         self.white_to_play = not self.white_to_play
+
+    
+    # Undo a move
+    def undo_move(self):
+
+        if self.log_of_moves:
+            move = self.log_of_moves.pop()
+
+            self.board[move.start_row][move.start_col] = move.moved_piece
+            self.board[move.end_row][move.end_col] = move.captured_piece
+
+            self.white_to_play = not self.white_to_play
+        
+        else:
+            print("No move to undo")
+    
+    def get_valid_moves(self):
+        pass

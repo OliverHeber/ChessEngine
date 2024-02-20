@@ -11,7 +11,5 @@ class Move():
         self.captured_piece = board[self.end_row][self.end_col]
     
     def get_notated_move(self):
-        return self.get_rank_and_file(self.start_row, self.start_col) + self.get_rank_and_file(self.end_row, self.end_col)
-
-    def get_rank_and_file(self, row, col):
-        return COL_TO_FILE[col] + ROW_TO_RANK[row]
+        return COL_TO_FILE[self.start_col] + ROW_TO_RANK[self.start_row] +\
+               COL_TO_FILE[self.end_col] + ROW_TO_RANK[self.end_row]

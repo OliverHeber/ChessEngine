@@ -25,6 +25,7 @@ def main():
 
     playing = True
     while playing:
+        # Event queue
         for e in p.event.get():
             if e.type == p.QUIT:
                 playing = False
@@ -39,15 +40,20 @@ def main():
                 else:
                     selected_square = (row, col)
                     clicked_squares.append(selected_square)
-                
+                # Once we have two different (row,col) moves selected, make the move on the board 
                 if len(clicked_squares) == 2:
                     start_square = clicked_squares[0]
                     end_square = clicked_squares[1]
                     move = Move(start_square, end_square, board.board)
                     print(move.get_notated_move())
                     board.make_move(move)
+
+                    # We made the move, so reset
                     selected_square = tuple()
                     clicked_squares = []
+            elif e.type == p.KEYDOWN:
+                if e.key == p.K_u: # Undo when 'u' is pressed
+                    board.undo_move()
 
         # Update the pieces and board on the board
         board.draw_board(screen, p)
