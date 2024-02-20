@@ -5,23 +5,16 @@ from Constants import PIECES, WIDTH, HEIGHT, SQ_SIZE, MAX_FPS, IMAGES
 from Move import Move
 
 def main():
-    # Init pygame and display
+    
     p.init()
     screen = p.display.set_mode((WIDTH, HEIGHT))
-    clock = p.time.Clock()
-    screen.fill(p.Color("white"))
-    
-    # Create board object
-    board = Board(p)
-
-    # Initialise piece images into memory
+    clock = p.time.Clock()    
+    board = Board()
     board.init_images(p)
-
-    # Maintain last selected square by the user
     selected_square = tuple()
-
-    # Maintain list of last up to 2 player clicks
     clicked_squares = []
+    move_made = False
+    valid_moves = board.get_valid_moves()
 
     playing = True
     while playing:
@@ -36,7 +29,6 @@ def main():
                 if selected_square == (row, col):
                     selected_square = ()
                     clicked_squares = []
-                # Selected a different square from the previous click
                 else:
                     selected_square = (row, col)
                     clicked_squares.append(selected_square)
@@ -46,22 +38,30 @@ def main():
                     end_square = clicked_squares[1]
                     move = Move(start_square, end_square, board.board)
                     print(move.get_notated_move())
-                    board.make_move(move)
+                    print(Move((1,1), (2,1), board.board) in valid_moves)
+                    if move in valid_moves:
+                        board.make_move(move)
+                        move_made = True
 
-                    # We made the move, so reset
+                    # Made a move, reset
                     selected_square = tuple()
                     clicked_squares = []
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_u: # Undo when 'u' is pressed
                     board.undo_move()
+                    move_made = True
 
-        # Update the pieces and board on the board
+        if move_made:
+            board.get_valid_moves()
+            move_made = False
+
+        # Update the board
         board.draw_board(screen, p)
         board.draw_pieces(screen, p)
         clock.tick(MAX_FPS)
-
-        # Update pygame display
         p.display.flip()
+
+        
 
 if __name__ == "__main__":
     main()
