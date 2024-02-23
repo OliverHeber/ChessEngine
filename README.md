@@ -6,7 +6,7 @@
 - Moves converted to chess notation and displayed in the console
 
 ## TODO:
-- Implement AI player using Mini-max and Alpha-Beta pruning
+- Implement AI player using the Mini-Max algorithm with Alpha-Beta pruning for speedup
 - Implement UI for selecting to play against human or AI player
 - Implement UI for chess notated moves alongside the board
 - Represent the board using a 64-bit integer
