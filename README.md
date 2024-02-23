@@ -1,7 +1,7 @@
 # Chess 
 - Board and pieces display on 512px*512px screen
 - Pieces move according to rules of chess
-- All pieces capture according to rules of chess
+- Pieces capture according to rules of chess
 - Able to undo moves by popping from a stack of played moves
 - Moves converted to chess notation and displayed in the console
 
